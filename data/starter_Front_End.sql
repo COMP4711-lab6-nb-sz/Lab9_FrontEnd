@@ -32,8 +32,7 @@ CREATE TABLE `Categories` (
   `name` varchar(64) NOT NULL,
   `description` text NOT NULL,
   `image` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
 --
 -- Dumping data for table `categories`
 --
