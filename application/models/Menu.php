@@ -62,6 +62,15 @@ class Menu extends CI_Model {
                 return ! empty($result);
         }
         
+        
+        // Update a record in the DB
+        function update($record)
+        {
+                $this->rest->initialize(array('server' => REST_SERVER));
+                $this->rest->option(CURLOPT_PORT, REST_PORT);
+                $retrieved = $this->rest->put('/maintenance/item/id/' . $record->id, $record);
+        }
+        
         function rules() {
             $config = [
                 ['field'=>'id', 'label'=>'Menu code', 'rules'=> 'required|integer'],
