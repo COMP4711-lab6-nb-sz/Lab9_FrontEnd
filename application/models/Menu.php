@@ -48,8 +48,7 @@ class Menu extends CI_Model {
         {
             $this->rest->initialize(array('server' => REST_SERVER));
             $this->rest->option(CURLOPT_PORT, REST_PORT);
-            print_r($this->rest->delete('/maintenance/item/id/' . $key));
-            die();
+            $this->rest->delete('maintenance/item/id/' . $key);
         }
         
         
