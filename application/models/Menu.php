@@ -52,6 +52,16 @@ class Menu extends CI_Model {
             die();
         }
         
+        
+        // Determine if a key exists
+        function exists($key, $key2 = null)
+        {
+                $this->rest->initialize(array('server' => REST_SERVER));
+                $this->rest->option(CURLOPT_PORT, REST_PORT);
+                $result = $this->rest->get('/maintenance/item/id/' . $key);
+                return ! empty($result);
+        }
+        
         function rules() {
             $config = [
                 ['field'=>'id', 'label'=>'Menu code', 'rules'=> 'required|integer'],
