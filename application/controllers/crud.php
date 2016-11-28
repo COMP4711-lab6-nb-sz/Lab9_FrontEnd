@@ -9,43 +9,26 @@ class Crud extends Application {
 		parent::__construct();
 		$this->load->helper('formfields');
 	}
-/*	public function index()	{
-		$role = $this->session->userdata('userrole');
-		if ($role == 'admin'){
-			$this->data['content'] = 'This is admin view.';
-		} 
-		else if ($role == 'user'){
-			$this->data['content'] = 'You\'re not authorized to view this page. Go away.';
-		}
-		else{
-			$this->data['content'] = 'This shouldn\'t happen';
-		}
+        public function index() {
+                    $userrole = $this->session->userdata('userrole');
+                    if ($userrole != 'admin') {
+                        $message = 'You are not authorized to access this page';
+                        $this->data['content'] = $message;
+                    }
+                    $message = 'commence .';
+                    $this->data['pagebody' ] ='mtce';
+                    $this->data['items'] = $this->menu->all();
+                    $this->render();
+                }
+        
 
-		$this->render();
-	}*/
-
-	public function index() {     
-		$userrole = $this->session->userdata('userrole');
-		if ($userrole != 'admin') {  
-	       $message = 'You are not authorized to access this page. Go away'; 
-	       $this->data['content'] = $message;
-	       $this->render();                 
-	    }    
-	    else{
-		    /*$message = 'Get ready to fix stuff.';     
-		    $this->data['content'] = $message; */
-		    $this->data['pagebody']='mtce';
-		    $this->data['items'] = $this->menu->all();    
-		    $this->render();
-	    }
-	}
-
+	
 	function edit($id = null) {
 		 // try the session first
 		 $key = $this->session->userdata('key');
 		 $record = $this->session->userdata('record');
 		 // if not there, get them from the database
-		 if (empty($record)) {
+		 if (empty($record) && ($id !== null)) {
 			 $record = $this->menu->get($id);
 			 $key = $id;
 			 $this->session->set_userdata('key',$id);
@@ -121,7 +104,7 @@ class Crud extends Application {
 			else
 			$this->menu->update($record);
 			// and redisplay the list
-		$this->index(); 
+		 $this->cancel();
 	}
 	function show_any_errors() {
 		 $result = '';
@@ -162,6 +145,7 @@ class Crud extends Application {
 	 // only delete if editing an existing record
 		if (! empty($record)) {
 			$this->menu->delete($key);
+                        $this->session->unset_userdata('record');
 		}
 		$this->index();
 	}
